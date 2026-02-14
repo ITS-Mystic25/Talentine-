@@ -54,6 +54,156 @@
         .theme-toggle:hover { color: var(--primary); border-color: var(--primary); }
         .hamburger { display: none; cursor: pointer; font-size: 1.5rem; }
 
+        * POPUP BACKGROUND */
+.login-popup{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.45);
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+/* LOGIN BOX */
+.login-box{
+position:relative;
+background:linear-gradient(180deg,#ffffff,#f4f7ff);
+padding:35px;
+width:340px;
+border-radius:18px;
+box-shadow:0 15px 45px rgba(0,0,0,0.25);
+text-align:center;
+animation:popup .3s ease;
+}
+
+@keyframes popup{
+from{transform:scale(.8);opacity:0}
+to{transform:scale(1);opacity:1}
+}
+
+.login-box h2{
+margin-bottom:5px;
+color:#1a4cff;
+}
+
+.subtitle{
+font-size:13px;
+color:#777;
+margin-bottom:15px;
+}
+
+/* INPUTS */
+.login-box input{
+width:100%;
+padding:11px;
+margin:8px 0;
+border-radius:8px;
+border:1px solid #d6dcff;
+outline:none;
+transition:.2s;
+}
+
+.login-box input:focus{
+border-color:#1a4cff;
+box-shadow:0 0 0 2px rgba(26,76,255,.15);
+}
+
+/* PLAN BUTTONS */
+.plan-select{
+margin-top:12px;
+}
+
+.plan-select p{
+font-size:13px;
+color:#555;
+margin-bottom:6px;
+}
+
+.plan-btn{
+width:100%;
+padding:10px;
+margin:5px 0;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+background:#eef2ff;
+color:#1a4cff;
+transition:.25s;
+}
+
+.plan-btn:hover{
+transform:translateY(-1px);
+}
+
+.plan-btn.premium{
+background:linear-gradient(135deg,#1a4cff,#4c7dff);
+color:white;
+}
+
+/* ACTIVE PLAN */
+.plan-btn.active{
+outline:3px solid rgba(26,76,255,.35);
+}
+
+/* SELECTED TEXT */
+.selected-plan{
+margin:10px 0;
+font-size:13px;
+color:#333;
+font-weight:500;
+}
+
+/* LOGIN BUTTON */
+.login-submit{
+width:100%;
+padding:11px;
+margin-top:10px;
+background:#1a4cff;
+color:white;
+border:none;
+border-radius:9px;
+font-weight:600;
+cursor:pointer;
+transition:.25s;
+}
+
+.login-submit:hover{
+background:#0033cc;
+}
+
+/* CLOSE */
+.close-btn{
+position:absolute;
+top:12px;
+right:15px;
+cursor:pointer;
+font-size:18px;
+color:#888;
+}
+
+.close-btn:hover{
+color:black;
+}
+
+/* LOGIN */
+.login-btn{
+background:white;
+color:#1a4cff;
+border:2px solid #1a4cff;
+padding:8px 18px;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+transition:.25s;
+}
+
+.login-btn:hover{
+background:#1a4cff;
+color:white;
+transform:translateY(-1px);
+}
         /* --- BUTTONS --- */
         .btn { padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer; transition: 0.3s; }
         .btn-primary { background: var(--primary); color: white; }
@@ -151,10 +301,46 @@
                 </button>
                 <a href="#" class="btn btn-primary">Get Started</a>
                 <div class="hamburger" id="menuBtn"><i class="fa-solid fa-bars"></i></div>
-            </div>
-        </nav>
-    </header>
+                <button class="login-btn" onclick="openLogin()">Login</button>
 
+                
+            </div>          
+        </nav>
+        <div class="layout">
+
+                                <div class="login-popup" id="loginPopup">
+
+                            <div class="login-box">
+
+                                <h2>Welcome to Meeting Mind</h2>
+                                <p class="subtitle">Login & choose your plan</p>
+
+                                <input type="text" id="email" placeholder="Email">
+                            <input type="password" id="password" placeholder="Password">
+
+                                <div class="plan-select">
+                                <p>Select Plan:</p>
+
+                                <button class="plan-btn" onclick="selectPlan('Free')" id="freePlan">
+                                    Free Plan
+                                </button>
+
+                                <button class="plan-btn premium" onclick="selectPlan('Premium')" id="premiumPlan">
+                                    Premium Plan ⭐
+                                </button>
+                                </div>
+
+                                <div class="selected-plan" id="selectedPlan">
+                                No plan selected
+                                </div>
+
+                                <button class="login-submit" onclick="loginUser()"> Login </button>
+
+                                <span class="close-btn" onclick="closeLogin()">✕</span>
+
+                            </div>
+                            </div>
+    </header>
     <section class="hero">
         <div class="badge">Trusted by professionals worldwide</div>
         <h1>Never Miss a <br><span>Meeting Detail</span> Again</h1>
@@ -337,6 +523,44 @@
         window.addEventListener('click', (e) => {
             if (e.target === modal) modal.classList.remove('active');
         });
+        /* ===============================
+        LOGIN POPUP
+        ================================*/
+
+        function openLogin(){
+        document.getElementById("loginPopup").style.display="flex";
+        }
+
+        function closeLogin(){
+        document.getElementById("loginPopup").style.display="none";
+        }
+
+        /* PLAN SELECT */
+        function selectPlan(plan){
+
+        document.getElementById("selectedPlan").innerText =
+        "Selected Plan: " + plan;
+
+        document.getElementById("freePlan").classList.remove("active");
+        document.getElementById("premiumPlan").classList.remove("active");
+
+        if(plan==="Free"){
+        document.getElementById("freePlan").classList.add("active");
+        }else{
+        document.getElementById("premiumPlan").classList.add("active");
+        }
+        }
+
+        /* LOGIN */
+        function loginUser(){
+
+        alert("✅ You logged in successfully!");
+
+        setTimeout(()=>{
+        closeLogin();
+        },500);
+
+        }
     </script>
 </body>
 </html>

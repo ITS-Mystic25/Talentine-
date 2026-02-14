@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MeetAI</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    *{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f4f8fc;
+color:#1a2b3c;
+}
+
+/* HEADER */
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 35px;
+background:white;
+box-shadow:0 2px 12px rgba(0,0,0,0.08);
+position:sticky;
+top:0;
+z-index:100;
+}
+
+/* LOGO */
+.logo{
+font-size:22px;
+font-weight:700;
+color:#1a4cff;
+letter-spacing:.5px;
+}
+
+/* NAV LINKS */
+.nav a{
+margin:0 15px;
+text-decoration:none;
+color:#444;
+font-weight:500;
+transition:.2s;
+}
+
+.nav a:hover{
+color:#1a4cff;
+}
+
+/* RIGHT BUTTON AREA */
+.header-actions{
+display:flex;
+gap:12px;
+}
+
+/* FREE */
+.free-btn{
+background:#eef3ff;
+color:#1a4cff;
+border:none;
+padding:9px 16px;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+transition:.25s;
+}
+
+.free-btn:hover{
+background:#dce6ff;
+transform:translateY(-1px);
+}
+
+/* PREMIUM */
+.premium-btn{
+background:linear-gradient(135deg,#1a4cff,#4c7dff);
+color:white;
+border:none;
+padding:9px 18px;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+transition:.25s;
+box-shadow:0 4px 12px rgba(26,76,255,.3);
+}
+
+.premium-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 6px 18px rgba(26,76,255,.4);
+}
+
+/* POPUP BACKGROUND */
+.login-popup{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.45);
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+/* LOGIN BOX */
+.login-box{
+position:relative;
+background:linear-gradient(180deg,#ffffff,#f4f7ff);
+padding:35px;
+width:340px;
+border-radius:18px;
+box-shadow:0 15px 45px rgba(0,0,0,0.25);
+text-align:center;
+animation:popup .3s ease;
+}
+
+@keyframes popup{
+from{transform:scale(.8);opacity:0}
+to{transform:scale(1);opacity:1}
+}
+
+.login-box h2{
+margin-bottom:5px;
+color:#1a4cff;
+}
+
+.subtitle{
+font-size:13px;
+color:#777;
+margin-bottom:15px;
+}
+
+/* INPUTS */
+.login-box input{
+width:100%;
+padding:11px;
+margin:8px 0;
+border-radius:8px;
+border:1px solid #d6dcff;
+outline:none;
+transition:.2s;
+}
+
+.login-box input:focus{
+border-color:#1a4cff;
+box-shadow:0 0 0 2px rgba(26,76,255,.15);
+}
+
+/* PLAN BUTTONS */
+.plan-select{
+margin-top:12px;
+}
+
+.plan-select p{
+font-size:13px;
+color:#555;
+margin-bottom:6px;
+}
+
+.plan-btn{
+width:100%;
+padding:10px;
+margin:5px 0;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+background:#eef2ff;
+color:#1a4cff;
+transition:.25s;
+}
+
+.plan-btn:hover{
+transform:translateY(-1px);
+}
+
+.plan-btn.premium{
+background:linear-gradient(135deg,#1a4cff,#4c7dff);
+color:white;
+}
+
+/* ACTIVE PLAN */
+.plan-btn.active{
+outline:3px solid rgba(26,76,255,.35);
+}
+
+/* SELECTED TEXT */
+.selected-plan{
+margin:10px 0;
+font-size:13px;
+color:#333;
+font-weight:500;
+}
+
+/* LOGIN BUTTON */
+.login-submit{
+width:100%;
+padding:11px;
+margin-top:10px;
+background:#1a4cff;
+color:white;
+border:none;
+border-radius:9px;
+font-weight:600;
+cursor:pointer;
+transition:.25s;
+}
+
+.login-submit:hover{
+background:#0033cc;
+}
+
+/* CLOSE */
+.close-btn{
+position:absolute;
+top:12px;
+right:15px;
+cursor:pointer;
+font-size:18px;
+color:#888;
+}
+
+.close-btn:hover{
+color:black;
+}
+
+/* LOGIN */
+.login-btn{
+background:white;
+color:#1a4cff;
+border:2px solid #1a4cff;
+padding:8px 18px;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+transition:.25s;
+}
+
+.login-btn:hover{
+background:#1a4cff;
+color:white;
+transform:translateY(-1px);
+}
+
+/* LAYOUT */
+.layout{display:flex;}
+
+/* SIDEBAR */
+/* SIDEBAR BLUE THEME */
+.sidebar{
+width:220px;
+min-height:calc(100vh - 60px);
+padding:20px;
+
+/* NICE BLUE GRADIENT */
+background:linear-gradient(180deg,#0a4a8e,#8c8d90);
+
+color:white;
+border-right:none;
+}
+
+/* TITLE */
+.sidebar h2{
+margin-bottom:18px;
+color:white;
+}
+
+/* MENU */
+.sidebar ul{list-style:none;}
+
+.sidebar li{
+padding:11px;
+border-radius:7px;
+margin:8px 0;
+cursor:pointer;
+color:white;
+transition:.25s;
+}
+
+/* HOVER */
+.sidebar li:hover{
+background:rgba(255,255,255,0.15);
+}
+
+/* ACTIVE ITEM */
+.sidebar .active{
+background:white;
+color:#021634;
+font-weight:bold;
+}
+
+
+/* CONTENT */
+.content{
+flex:1;
+padding:30px;
+
+/* BLUE WHITE GRADIENT MAIN BODY */
+background:
+linear-gradient(135deg,#e3f2fd 0%, #ffffff 40%, #bbdefb 100%),
+repeating-linear-gradient(
+0deg,
+rgba(13,71,161,0.03) 0px,
+rgba(13,71,161,0.03) 1px,
+transparent 1px,
+transparent 40px
+),
+repeating-linear-gradient(
+90deg,
+rgba(13,71,161,0.03) 0px,
+rgba(13,71,161,0.03) 1px,
+transparent 1px,
+transparent 40px
+);
+}
+
+/* CARD */
+.card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+margin-bottom:25px;
+}
+
+textarea{
+width:100%;
+height:110px;
+margin:12px 0;
+padding:10px;
+border:1px solid #ccc;
+border-radius:8px;
+resize:none;
+}
+
+/* LOADING */
+.loading{
+margin-top:10px;
+color:#1976d2;
+font-weight:bold;
+}
+
+.hidden{display:none;}
+
+.record-area{
+margin:12px 0;
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.record{
+background:#e53935;
+}
+
+.record.recording{
+background:#2e7d32;
+}
+
+#recordStatus{
+font-weight:bold;
+color:#0d47a1;
+}
+
+
+input[type="file"]::file-selector-button{
+background:#1a4cff;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* ===== FILE INPUT STYLE ===== */
+input[type="file"]{
+padding:10px;
+background:white;
+border:2px solid #dbe6ff;
+border-radius:8px;
+font-size:14px;
+margin-bottom:10px;
+cursor:pointer;
+}
+
+/* ===== COMMON BUTTON STYLE ===== */
+.content button,
+.login-box button{
+padding:12px 18px;
+padding:12px 18px;
+border:none;
+border-radius:10px;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+transition:all .25s ease;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+/* ===== RECORD BUTTON ===== */
+.record-btn{
+background:#ff4d4d;
+color:white;
+}
+.record-btn:hover{
+background:#d93636;
+transform:translateY(-2px) scale(1.03);
+}
+
+/* ===== ANALYZE BUTTON ===== */
+.analyze-btn{
+background:linear-gradient(135deg,#1a73ff,#0052cc);
+color:white;
+}
+.analyze-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 6px 18px rgba(0,82,204,.35);
+}
+
+/* ===== COPY BUTTON ===== */
+.copy-btn{
+background:white;
+color:#1a4cff;
+border:2px solid #1a4cff;
+}
+.copy-btn:hover{
+background:#1a4cff;
+color:white;
+transform:translateY(-2px);
+}
+
+/* ===== DOWNLOAD BUTTON ===== */
+.download-btn{
+background:#1a4cff;
+color:white;
+}
+.download-btn:hover{
+background:#0033cc;
+transform:translateY(-2px);
+}
+
+/* ===== BUTTON GROUP ===== */
+.button-row{
+margin-top:15px;
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+}
+
+/* KANBAN */
+.kanban{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px;
+}
+
+.column{
+background:white;
+padding:15px;
+border-radius:12px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+transition:transform .25s, box-shadow .25s;
+}
+
+.column:hover{
+transform:translateY(-8px) scale(1.02);
+box-shadow:0 12px 28px rgba(13,71,161,0.18);
+}
+
+.column h3{
+color:#0d47a1;
+margin-bottom:10px;
+}
+
+.column li{
+background:#e3f2fd;
+margin:6px 0;
+padding:7px;
+border-radius:6px;
+}
+
+/* BUTTON AREA */
+.buttons{
+margin-top:25px;
+text-align:center;
+}
+
+/* FLOAT BUTTON */
+.ai-chat-btn{
+position:fixed;
+bottom:25px;
+right:25px;
+background:#0d47a1;
+color:white;
+width:60px;
+height:60px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:26px;
+cursor:pointer;
+box-shadow:0 8px 20px rgba(0,0,0,0.25);
+z-index:999;
+transition:.3s;
+}
+
+.ai-chat-btn:hover{
+transform:scale(1.1);
+background:#1565c0;
+}
+
+/* CHATBOX */
+.ai-chatbox{
+position:fixed;
+bottom:100px;
+right:25px;
+width:300px;
+background:white;
+border-radius:14px;
+box-shadow:0 12px 35px rgba(0,0,0,0.25);
+display:none;
+flex-direction:column;
+overflow:hidden;
+z-index:999;
+}
+
+.chat-header{
+background:#0d47a1;
+color:white;
+padding:12px;
+display:flex;
+justify-content:space-between;
+font-weight:600;
+}
+
+.chat-body{
+height:260px;
+padding:12px;
+overflow-y:auto;
+background:#f4f8fc;
+}
+
+.chat-body .bot{
+background:#e3f2fd;
+padding:8px;
+border-radius:8px;
+margin-bottom:8px;
+}
+
+.chat-body .user{
+background:#1976d2;
+color:white;
+padding:8px;
+border-radius:8px;
+margin-bottom:8px;
+text-align:right;
+}
+
+.chat-input{
+display:flex;
+border-top:1px solid #ddd;
+}
+
+.chat-input input{
+flex:1;
+border:none;
+padding:10px;
+}
+
+.chat-input button{
+border:none;
+background:#1976d2;
+color:white;
+padding:10px 14px;
+cursor:pointer;
+}
+
+.footer{
+background:#1f2f5c;
+color:#cfe0ff;
+padding-top:50px;
+margin-top:40px;
+}
+
+.footer-container{
+max-width:1200px;
+margin:auto;
+display:grid;
+grid-template-columns:2fr 1fr 1fr 1fr;
+gap:40px;
+padding:0 30px 40px;
+}
+
+.footer-col h3{
+color:white;
+margin-bottom:15px;
+font-size:16px;
+}
+
+.footer-col ul{
+list-style:none;
+}
+
+.footer-col li{
+margin:8px 0;
+cursor:pointer;
+transition:.2s;
+}
+
+.footer-col li:hover{
+color:white;
+transform:translateX(4px);
+}
+
+.brand h2{
+color:white;
+margin-bottom:12px;
+}
+
+.brand p{
+line-height:1.6;
+max-width:280px;
+}
+
+/* divider bottom */
+.footer-bottom{
+border-top:1px solid rgba(255,255,255,0.15);
+margin-top:20px;
+padding:20px 30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+max-width:1200px;
+margin-left:auto;
+margin-right:auto;
+}
+
+/* socials */
+.socials span{
+background:#2c46a3;
+color:white;
+padding:10px 14px;
+border-radius:8px;
+margin-left:10px;
+cursor:pointer;
+transition:.25s;
+display:inline-block;
+}
+
+.socials span:hover{
+background:#3f63ff;
+transform:translateY(-2px);
+}
+</style>
+</head>
+
+<body>
+    <header class="header">
+
+  <div class="logo">
+    🤖 Meeting Mind
+  </div>
+
+  
+
+  <div class="header-actions">
+
+    <button class="free-btn">Free</button>
+
+    <button class="premium-btn">Premium</button>
+
+    <button class="login-btn" onclick="openLogin()">Login</button>
+
+  </div>
+
+</header>
+
+
+<div class="layout">
+
+    <div class="login-popup" id="loginPopup">
+
+  <div class="login-box">
+
+    <h2>Welcome to Meeting Mind</h2>
+    <p class="subtitle">Login & choose your plan</p>
+
+    <input type="text" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+
+    <div class="plan-select">
+      <p>Select Plan:</p>
+
+      <button class="plan-btn" onclick="selectPlan('Free')" id="freePlan">
+        Free Plan
+      </button>
+
+      <button class="plan-btn premium" onclick="selectPlan('Premium')" id="premiumPlan">
+        Premium Plan ⭐
+      </button>
+    </div>
+
+    <div class="selected-plan" id="selectedPlan">
+      No plan selected
+    </div>
+
+    <button class="login-submit" onclick="loginUser()"> Login </button>
+
+    <span class="close-btn" onclick="closeLogin()">✕</span>
+
+  </div>
+
+</div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2>Dashboard</h2>
+        <ul>
+            <li class="active">🏠 Home</li>
+            <li>📁 Meetings</li>
+            <li>📊 Reports</li>
+            <li>⚙ Settings</li>
+        </ul>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="content">
+
+        <!-- INPUT BOX -->
+
+        <section class="card">
+    <h2>Upload Meeting Content</h2>
+
+    <textarea id="transcript"
+    placeholder="Paste meeting transcript..."></textarea>
+
+    <!-- RECORD BUTTON -->
+     <input type="file" accept="audio/*">
+
+<div class="button-row">
+<button class="record-btn" onclick="startRecording()">🎤 Start Recording</button>
+<button class="analyze-btn" onclick="analyzeMeeting()">Analyze Meeting</button>
+</div>
+    <div id="loading" class="loading hidden">
+        AI analyzing meeting...
+    </div>
+</section>
+
+        <!-- KANBAN -->
+        <section class="kanban">
+
+            <div class="column">
+                <h3>Action Items</h3>
+                <ul id="actionItems"></ul>
+            </div>
+
+            <div class="column">
+                <h3>Key Decisions</h3>
+                <ul id="keyDecisions"></ul>
+            </div>
+
+            <div class="column">
+                <h3>Next Steps</h3>
+                <ul id="nextSteps"></ul>
+            </div>
+
+            <div class="column">
+                <h3>Deadlines</h3>
+                <ul id="deadlines"></ul>
+            </div>
+
+        </section>
+
+        <div class="buttons">
+            <button class="copy-btn" onclick="copyReport()">Copy Report</button>
+            <button class="download-btn" onclick="downloadReport()">Download</button>
+        </div>
+
+    </main>
+
+</div>
+<!-- AI CHAT BUTTON -->
+<div class="ai-chat-btn" onclick="toggleChat()">💬</div>
+
+<!-- CHATBOX -->
+<div class="ai-chatbox" id="chatbox">
+    <div class="chat-header">
+        MeetAI Assistant
+        <span onclick="toggleChat()">✖</span>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+        <div class="bot">Hi 👋 Ask me about your meeting!</div>
+    </div>
+
+    <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Type message...">
+        <button onclick="sendMsg()">Send</button>
+    </div>
+</div>
+
+<footer class="footer">
+
+  <div class="footer-container">
+
+    <!-- LEFT BRAND -->
+    <div class="footer-col brand">
+      <h2>💡 MeetingMind</h2>
+      <p>Transform your meetings into actionable insights with AI-powered summarization.</p>
+    </div>
+
+    <!-- PRODUCT -->
+    <div class="footer-col">
+      <h3>Product</h3>
+      <ul>
+        <li>Features</li>
+        <li>Pricing</li>
+        <li>Integrations</li>
+        <li>API</li>
+      </ul>
+    </div>
+
+    <!-- COMPANY -->
+    <div class="footer-col">
+      <h3>Company</h3>
+      <ul>
+        <li>About Us</li>
+        <li>Careers</li>
+        <li>Blog</li>
+        <li>Contact</li>
+      </ul>
+    </div>
+
+    <!-- SUPPORT -->
+    <div class="footer-col">
+      <h3>Support</h3>
+      <ul>
+        <li>Help Center</li>
+        <li>Documentation</li>
+        <li>Status</li>
+        <li>Privacy Policy</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM -->
+  <div class="footer-bottom">
+
+    <p>© 2026 MeetingMind. All rights reserved.</p>
+
+    <div class="socials">
+      <span>X</span>
+      <span>in</span>
+      <span>📷</span>
+    </div>
+
+  </div>
+
+</footer>
+<script>
+    /* ===============================
+   LOGIN POPUP
+================================*/
+
+function openLogin(){
+document.getElementById("loginPopup").style.display="flex";
+}
+
+function closeLogin(){
+document.getElementById("loginPopup").style.display="none";
+}
+
+/* PLAN SELECT */
+function selectPlan(plan){
+
+document.getElementById("selectedPlan").innerText =
+"Selected Plan: " + plan;
+
+document.getElementById("freePlan").classList.remove("active");
+document.getElementById("premiumPlan").classList.remove("active");
+
+if(plan==="Free"){
+document.getElementById("freePlan").classList.add("active");
+}else{
+document.getElementById("premiumPlan").classList.add("active");
+}
+}
+
+/* LOGIN */
+function loginUser(){
+
+alert("✅ You logged in successfully!");
+
+setTimeout(()=>{
+closeLogin();
+},500);
+
+}
+
+
+/* ===============================
+   AUDIO RECORDING
+================================*/
+
+let mediaRecorder;
+let audioChunks=[];
+
+async function startRecording(){
+
+try{
+
+const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+
+mediaRecorder = new MediaRecorder(stream);
+
+audioChunks=[];
+
+mediaRecorder.ondataavailable = e=>{
+audioChunks.push(e.data);
+};
+
+mediaRecorder.onstop = ()=>{
+
+const blob = new Blob(audioChunks,{type:"audio/wav"});
+const url = URL.createObjectURL(blob);
+
+const a=document.createElement("a");
+a.href=url;
+a.download="meeting_record.wav";
+a.click();
+
+};
+
+mediaRecorder.start();
+
+alert("🎤 Recording started (5 seconds)");
+
+setTimeout(()=>{
+mediaRecorder.stop();
+alert("✅ Recording saved & downloaded");
+},5000);
+
+}catch(err){
+
+alert("Microphone permission denied or unsupported browser");
+
+}
+
+}
+
+
+/* ===============================
+   ANALYZE MEETING (DEMO AI)
+================================*/
+
+function analyzeMeeting(){
+
+let fileInput=document.querySelector("input[type='file']");
+let transcript=document.getElementById("transcript").value.trim();
+
+if(!fileInput.files.length && !transcript){
+alert("Please upload audio OR paste transcript OR record first");
+return;
+}
+
+document.getElementById("loading").classList.remove("hidden");
+
+/* simulate AI delay */
+setTimeout(()=>{
+
+document.getElementById("loading").classList.add("hidden");
+
+document.getElementById("actionItems").innerHTML=`
+<li>Prepare project proposal</li>
+<li>Send summary to team</li>
+<li>Update documentation</li>
+`;
+
+document.getElementById("keyDecisions").innerHTML=`
+<li>Launch beta version next month</li>
+<li>Use cloud hosting</li>
+`;
+
+document.getElementById("nextSteps").innerHTML=`
+<li>Schedule next meeting</li>
+<li>Assign testing tasks</li>
+`;
+
+document.getElementById("deadlines").innerHTML=`
+<li>Proposal – Friday</li>
+<li>Testing – Next Week</li>
+`;
+
+alert("🧠 Meeting analyzed successfully");
+
+},1500);
+
+}
+
+
+/* ===============================
+   COPY REPORT
+================================*/
+
+function copyReport(){
+
+let reportText = `
+ACTION ITEMS:
+${document.getElementById("actionItems").innerText}
+
+KEY DECISIONS:
+${document.getElementById("keyDecisions").innerText}
+
+NEXT STEPS:
+${document.getElementById("nextSteps").innerText}
+
+DEADLINES:
+${document.getElementById("deadlines").innerText}
+`;
+
+navigator.clipboard.writeText(reportText);
+
+alert("📋 Report copied to clipboard");
+
+}
+
+
+/* ===============================
+   DOWNLOAD REPORT
+================================*/
+
+function downloadReport(){
+
+let reportText = `
+ACTION ITEMS:
+${document.getElementById("actionItems").innerText}
+
+KEY DECISIONS:
+${document.getElementById("keyDecisions").innerText}
+
+NEXT STEPS:
+${document.getElementById("nextSteps").innerText}
+
+DEADLINES:
+${document.getElementById("deadlines").innerText}
+`;
+
+let blob = new Blob([reportText],{type:"text/plain"});
+
+let a=document.createElement("a");
+a.href=URL.createObjectURL(blob);
+a.download="meeting_report.txt";
+a.click();
+
+alert("⬇ Report downloaded");
+
+}
+
+
+/* ===============================
+   AI CHATBOX
+================================*/
+
+function toggleChat(){
+const box=document.getElementById("chatbox");
+box.style.display = box.style.display==="flex" ? "none" : "flex";
+}
+
+function sendMsg(){
+
+const input=document.getElementById("chatInput");
+const text=input.value.trim();
+if(!text) return;
+
+const body=document.getElementById("chatBody");
+
+/* USER MESSAGE — FIXED SYNTAX ERROR HERE */
+body.innerHTML+=`<div class="user">${text}</div>`;
+
+/* BOT RESPONSE */
+setTimeout(()=>{
+body.innerHTML+=`<div class="bot">I’m a demo AI 🙂 Your meeting insights are shown in dashboard.</div>`;
+body.scrollTop=body.scrollHeight;
+},500);
+
+input.value="";
+body.scrollTop=body.scrollHeight;
+
+}
+
+</script>
+</body>
+</html>
