@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MeetingSummarizer Settings</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    }
+
+    /* HEADER */
+    .header {
+      background: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-logo {
+      font-weight: 600;
+      font-size: 18px;
+      color: #1e3a8a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-logo span {
+      background: #3b82f6;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 25px;
+      color: #475569;
+      font-size: 14px;
+    }
+
+    .header-nav div {
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .header-nav div:hover {
+      color: #2563eb;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      width: 1100px;
+      background: white;
+      border-radius: 20px;
+      display: flex;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      margin: 40px auto;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background: #f8fafc;
+      padding: 30px 20px;
+      border-right: 1px solid #e5e7eb;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 40px;
+      font-weight: 600;
+      color: #1e3a8a;
+    }
+
+    .logo-icon {
+      background: #3b82f6;
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 10px;
+      font-weight: bold;
+    }
+
+    nav a {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: 10px;
+      text-decoration: none;
+      color: #475569;
+      border-radius: 10px;
+      transition: 0.25s;
+    }
+
+    nav a:hover {
+      background: #e0edff;
+      color: #2563eb;
+      transform: translateX(4px);
+    }
+
+    nav a.active {
+      background: #3b82f6;
+      color: white;
+    }
+
+    /* Main */
+    .main {
+      flex: 1;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #0f172a;
+    }
+
+    section h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #0f172a;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 25px;
+      margin-bottom: 30px;
+      color: #64748b;
+    }
+
+    .tab {
+      cursor: pointer;
+      padding-bottom: 6px;
+      position: relative;
+      transition: 0.25s;
+    }
+
+    .tab:hover {
+      color: #2563eb;
+    }
+
+    .tab.active {
+      color: #2563eb;
+      border-bottom: 2px solid #2563eb;
+    }
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 30px;
+      left: 0;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      padding: 10px 0;
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: 0.25s ease;
+      z-index: 10;
+    }
+
+    .dropdown-menu div {
+      padding: 10px 15px;
+      font-size: 14px;
+      color: #334155;
+      transition: 0.2s;
+    }
+
+    .dropdown-menu div:hover {
+      background: #eff6ff;
+      color: #2563eb;
+      padding-left: 22px;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* Themes */
+    .themes {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+    }
+
+    .card h3 {
+      font-size: 15px;
+      margin-bottom: 5px;
+    }
+
+    .card p {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .light { background: #e0f2fe; }
+    .white { background: #f1f5f9; }
+    .blue { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; }
+    .dark { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; }
+
+    .swatch {
+      width: 40px;
+      height: 28px;
+      border-radius: 6px;
+      background: #94a3b8;
+    }
+
+    .swatch.dark { background: #0f172a; }
+    .swatch.accent { background: #facc15; }
+    .swatch.gray { background: #64748b; }
+
+    /* Toggles */
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .switch {
+      position: relative;
+      width: 46px;
+      height: 24px;
+    }
+
+    .switch input { display: none; }
+
+    .slider {
+      position: absolute;
+      background: #cbd5f5;
+      border-radius: 24px;
+      inset: 0;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .slider::before {
+      content: "";
+      position: absolute;
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      top: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    input:checked + .slider {
+      background: #3b82f6;
+    }
+
+    input:checked + .slider::before {
+      transform: translateX(22px);
+    }
+
+    /* FOOTER */
+    .footer {
+      background: #1f2f5c;
+      color: #cfe0ff;
+      padding-top: 50px;
+      margin-top: 40px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding: 0 30px 40px;
+    }
+
+    .footer-col h3,
+    .brand h2 {
+      color: white;
+      margin-bottom: 12px;
+    }
+
+    .footer-col li {
+      margin: 8px 0;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .footer-col li:hover {
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      margin-top: 20px;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .socials span {
+      background: #2c46a3;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: 0.25s;
+      display: inline-block;
+    }
+
+    .socials span:hover {
+      background: #3f63ff;
+      transform: translateY(-2px);
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">
+    <span>M</span> MeetingSummarizer
+  </div>
+
+  <div class="header-nav">
+    <div>Home</div>
+    <div>Features</div>
+    <div>Pricing</div>
+    <div>Contact</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">M</div>
+      <span>MeetingSummarizer</span>
+    </div>
+
+    <nav>
+      <a href="#">🏠 Dashboard</a>
+      <a href="#" class="active">📅 Meetings</a>
+      <a href="#">📄 Templates</a>
+      <a href="#">⚙️ Settings</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <h1>Settings</h1>
+
+    <div class="tabs">
+      <span class="tab active">Appearance</span>
+
+      <!-- AI Tuning Dropdown -->
+      <div class="tab dropdown">
+        AI Tuning
+        <div class="dropdown-menu">
+          <div>Summary Length</div>
+          <div>Creativity Level</div>
+          <div>Language Style</div>
+          <div>Keyword Focus</div>
+        </div>
+      </div>
+
+      <!-- Integrations Dropdown -->
+      <div class="tab dropdown">
+        Integrations
+        <div class="dropdown-menu">
+          <div>Zoom</div>
+          <div>Google Meet</div>
+          <div>Microsoft Teams</div>
+          <div>Slack</div>
+        </div>
+      </div>
+
+      <!-- Privacy Dropdown -->
+      <div class="tab dropdown">
+        Privacy & Security
+        <div class="dropdown-menu">
+          <div>Change Password</div>
+          <div>2-Factor Auth</div>
+          <div>Data Settings</div>
+          <div>Permissions</div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>Theme & Visuals</h2>
+
+      <div class="themes">
+        <div class="card light">
+          <div>
+            <h3>Calm Productivity</h3>
+            <p>Soft pastels and space for focus</p>
+          </div>
+          <div class="swatch"></div>
+        </div>
+
+        <div class="card white">
+          <div>
+            <h3>Modern & Minimal</h3>
+            <p>High contrast clean design</p>
+          </div>
+          <div class="swatch dark"></div>
+        </div>
+
+        <div class="card blue">
+          <div>
+            <h3>Fast & Energetic</h3>
+            <p>Dynamic vibrant interface</p>
+          </div>
+          <div class="swatch accent"></div>
+        </div>
+
+        <div class="card dark">
+          <div>
+            <h3>Dark Focus Mode</h3>
+            <p>Reduced eye strain</p>
+          </div>
+          <div class="swatch gray"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Interface Refinements</h2>
+
+      <div class="toggle-row">
+        <span>High Contrast Text</span>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <span>Condensed Dashboard</span>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-col brand">
+      <h2>💡 MeetingMind</h2>
+      <p>Transform meetings into AI-powered insights.</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Product</h3>
+      <ul>
+        <li>Features</li>
+        <li>Pricing</li>
+        <li>Integrations</li>
+        <li>API</li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3>Company</h3>
+      <ul>
+        <li>About</li>
+        <li>Careers</li>
+        <li>Blog</li>
+        <li>Contact</li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3>Support</h3>
+      <ul>
+        <li>Help Center</li>
+        <li>Docs</li>
+        <li>Status</li>
+        <li>Privacy</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2024 MeetingMind</p>
+    <div class="socials">
+      <span>X</span>
+      <span>in</span>
+      <span>📷</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
