@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeetingMind | Smart Summaries</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #22c55e;
+            --bg-body: #f8faff;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --modal-overlay: rgba(0, 0, 0, 0.7);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #020617;
+            --bg-card: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --nav-bg: rgba(15, 23, 42, 0.9);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: background 0.3s, color 0.3s; }
+        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; }
+
+        /* --- HEADER & NAV --- */
+        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 8%; max-width: 1400px; margin: 0 auto; }
+        
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.3rem; color: var(--primary); }
+        .logo svg { width: 32px; height: 32px; background: var(--primary); padding: 5px; border-radius: 8px; stroke: white; }
+
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 500; position: relative; padding: 5px 0; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--primary); transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+        .theme-toggle { cursor: pointer; font-size: 1.2rem; color: var(--text-muted); border: none; background: none; }
+        .hamburger { display: none; cursor: pointer; font-size: 1.5rem; }
+
+        /* --- BUTTONS --- */
+        .btn { padding: 10px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
+        .btn-outline:hover { background: var(--border); }
+
+        /* --- HERO --- */
+        .hero { padding: 160px 8% 80px; text-align: center; }
+        .badge { background: var(--bg-card); border: 1px solid var(--border); padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; color: var(--secondary); font-weight: 600; margin-bottom: 20px; display: inline-block; }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 20px; letter-spacing: -1px; }
+        .hero span { color: var(--primary); }
+        .hero p { max-width: 650px; margin: 0 auto 40px; color: var(--text-muted); font-size: 1.1rem; }
+        .hero-actions { display: flex; justify-content: center; gap: 15px; }
+
+        /* --- GRID SECTIONS --- */
+        .section-padding { padding: 80px 8%; max-width: 1400px; margin: 0 auto; text-align: center; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
+        
+        .card { background: var(--bg-card); padding: 40px; border-radius: 20px; border: 1px solid var(--border); text-align: left; }
+        .card:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .icon-box { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 1.3rem; }
+
+        /* --- PRICING SPECIFICS --- */
+        .pricing-card { display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+        .pricing-card.popular { border: 2px solid var(--secondary); transform: scale(1.05); z-index: 2; }
+        .price-tag { font-size: 3rem; font-weight: 800; margin: 20px 0; }
+        .price-tag span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
+        .feature-list { list-style: none; margin-bottom: 30px; }
+        .feature-list li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; color: var(--text-muted); }
+        .feature-list i { color: var(--secondary); }
+
+        /* --- MODAL --- */
+        .modal { position: fixed; inset: 0; background: var(--modal-overlay); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+        .modal.active { display: flex; }
+        .modal-content { background: #000; width: 100%; max-width: 800px; aspect-ratio: 16/9; border-radius: 12px; position: relative; }
+        .close-modal { position: absolute; top: -40px; right: 0; color: white; font-size: 2rem; cursor: pointer; }
+
+        /* --- MOBILE NAV --- */
+        @media (max-width: 768px) {
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-card); flex-direction: column; padding: 20px; border-bottom: 1px solid var(--border); }
+            .nav-links.active { display: flex; }
+            .hamburger { display: block; }
+            .hero-actions { flex-direction: column; }
+            .pricing-card.popular { transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+                MeetingMind
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how">How it Works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeBtn"><i class="fa-solid fa-moon"></i></button>
+                <a href="#" class="btn btn-primary">Get Started</a>
+                <div class="hamburger" id="menuBtn"><i class="fa-solid fa-bars"></i></div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="badge">Trusted by professionals worldwide</div>
+        <h1>Never Miss a <br><span>Meeting Detail</span> Again</h1>
+        <p>Transform your meetings into clear, actionable summaries instantly. Let AI capture every important point while you focus on the conversation.</p>
+        <div class="hero-actions">
+            <a href="#" class="btn btn-primary" style="padding: 15px 35px;">Start Free Trial</a>
+            <button class="btn btn-outline" id="openModal" style="padding: 15px 35px;"><i class="fa-solid fa-play"></i> Watch Demo</button>
+        </div>
+    </section>
+
+    <section class="section-padding" id="features">
+        <h2 style="font-size: 2.5rem;">Everything You Need</h2>
+        <div class="grid-3">
+            <div class="card">
+                <div class="icon-box" style="background: #eff6ff; color: #3b82f6;"><i class="fa-solid fa-microphone"></i></div>
+                <h3>Live Transcription</h3>
+                <p>Real-time speech-to-text with speaker identification. Never miss a word.</p>
+            </div>
+            <div class="card">
+                <div class="icon-box" style="background: #f0fdf4; color: #22c55e;"><i class="fa-solid fa-bolt"></i></div>
+                <h3>AI Summaries</h3>
+                <p>Smart algorithms extract key points and action items automatically.</p>
+            </div>
+            <div class="card">
+                <div class="icon-box" style="background: #faf5ff; color: #a855f7;"><i class="fa-solid fa-chart-line"></i></div>
+                <h3>Analytics</h3>
+                <p>Get insights into speaking time and meeting productivity metrics.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" id="pricing">
+        <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Choose Your Plan</h2>
+        <p style="color: var(--text-muted);">Scale your productivity with our flexible pricing.</p>
+        <div class="grid-3">

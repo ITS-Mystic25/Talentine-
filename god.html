@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instant Meeting Summarizer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --primary:#1d4ed8;
+  --header-bg:#0f1f3d;
+  --light-bg:#eaf3ff;
+  --card-bg:#ffffff;
+  --text-dark:#1e293b;
+  --text-light:#64748b;
+}
+
+body{
+  margin:0;
+  font-family:'Outfit', sans-serif;
+  background:var(--light-bg);
+  color:var(--text-dark);
+  transition:0.4s;
+}
+
+/* DARK MODE */
+.dark{
+  --light-bg:#0b1120;
+  --card-bg:#1e293b;
+  --text-dark:#f1f5f9;
+  --text-light:#94a3b8;
+  --header-bg:#081028;
+}
+
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 8%;
+  background:var(--header-bg);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:700;
+  font-size:22px;
+  color:white;
+}
+
+nav ul{
+  list-style:none;
+  display:flex;
+  gap:30px;
+}
+
+nav a{
+  text-decoration:none;
+  color:white;
+  font-weight:600;
+  font-size:16px;
+  transition:0.3s;
+}
+
+nav a:hover{
+  color:#60a5fa;
+}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+
+.toggle{
+  cursor:pointer;
+  font-size:20px;
+  color:white;
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:120px 20px;
+}
+
+.hero h1{
+  font-size:54px;
+  font-weight:700;
+}
+
+.hero span{
+  color:var(--primary);
+}
+
+.hero p{
+  margin-top:20px;
+  font-size:18px;
+  color:var(--text-light);
+}
+
+.hero button{
+  margin-top:30px;
+  padding:14px 32px;
+  border:none;
+  border-radius:30px;
+  font-weight:600;
+  font-size:16px;
+  cursor:pointer;
+  margin-right:15px;
+  transition:0.3s;
+}
+
+.primary-btn{
+  background:var(--primary);
+  color:white;
+}
+
+.secondary-btn{
+  background:white;
+  border:2px solid var(--primary);
+  color:var(--primary);
+}
+
+.primary-btn:hover{
+  transform:scale(1.08);
+}
+
+.secondary-btn:hover{
+  background:var(--primary);
+  color:white;
+}
+
+/* SECTIONS */
+section{
+  padding:100px 8%;
+  text-align:center;
+}
+
+h2{
+  font-size:40px;
+  margin-bottom:50px;
+}
+
+.flex{
+  display:flex;
+  justify-content:center;
+  gap:40px;
+  flex-wrap:wrap;
+}
+
+.card{
+  background:var(--card-bg);
+  padding:35px;
+  border-radius:20px;
+  width:280px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.08);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-10px);
+}
+
+.card h3{
+  margin-bottom:12px;
+  font-size:20px;
+}
+
+.card p{
+  color:var(--text-light);
+  font-size:15px;
+}
+
+/* SIGN IN MODAL */
+.modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content{
+  background:white;
+  padding:40px;
+  border-radius:15px;
+  width:320px;
+  text-align:center;
+}
+
+.modal-content input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+.modal-content button{
+  width:100%;
+  padding:10px;
+  background:var(--primary);
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.modal-content button:hover{
+  opacity:0.9;
+}
+
+.close{
+  text-align:right;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+/* DARK MODE FIX FOR MODAL */
+.dark .modal-content{
+  background:#1e293b;
+  color:white;
+}
+
+/* FOOTER */
+.footer{
+background:#1f2f5c;
+color:#cfe0ff;
+padding-top:50px;
+margin-top:40px;
+}
+
+.footer-container{
+max-width:1200px;
+margin:auto;
+display:grid;
+grid-template-columns:2fr 1fr 1fr 1fr;
+gap:40px;
+padding:0 30px 40px;
+}
+
+.footer-col h3{
+color:white;
+margin-bottom:15px;
+font-size:16px;
+}
+
+.footer-col ul{
+list-style:none;
+}
+
+.footer-col li{
+margin:8px 0;
+cursor:pointer;
+transition:.2s;
+}
+
+.footer-col li:hover{
+color:white;
+transform:translateX(4px);
+}
+
+.brand h2{
+color:white;
+margin-bottom:12px;
+}
+
+.brand p{
+line-height:1.6;
+max-width:280px;
+}
+
+/* divider bottom */
+.footer-bottom{
+border-top:1px solid rgba(255,255,255,0.15);
+margin-top:20px;
+padding:20px 30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+max-width:1200px;
+margin-left:auto;
+margin-right:auto;
+}
+
+/* socials */
+.socials span{
+background:#2c46a3;
+color:white;
+padding:10px 14px;
+border-radius:8px;
+margin-left:10px;
+cursor:pointer;
+transition:.25s;
+display:inline-block;
+}
+
+.socials span:hover{
+background:#3f63ff;
+transform:translateY(-2px);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="28">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+    </svg>
+    MeetSum AI
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+  </nav>
+
+  <div class="header-right">
+    <div class="toggle" onclick="toggleMode()">🌙</div>
+    <button class="secondary-btn" onclick="openModal()">Sign In</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Instant <span>Meeting Summaries</span></h1>
+  <p>AI captures conversations, extracts key insights, and assigns action items — automatically.</p>
+  <button class="primary-btn">Start Free Trial</button>
+  <button class="secondary-btn">Watch Demo</button>
+</section>
+
+<section id="features">
+  <h2>Powerful AI Features</h2>
+  <div class="flex">
+    <div class="card">
+      <h3>Live Transcription</h3>
+      <p>Real-time voice to text with speaker recognition.</p>
+    </div>
+    <div class="card">
+      <h3>Smart Summaries</h3>
+      <p>Concise meeting overviews in seconds.</p>
+    </div>
+    <div class="card">
+      <h3>Action Detection</h3>
+      <p>Automatically identifies tasks & deadlines.</p>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <h2>How It Works</h2>
+  <div class="flex">
+    <div class="card">
+      <h3>1. Record</h3>
+      <p>Upload or record meeting audio.</p>
+    </div>
+    <div class="card">
+      <h3>2. AI Processing</h3>
+      <p>Our AI structures & analyzes discussions.</p>
+    </div>
+    <div class="card">
+      <h3>3. Get Results</h3>
+      <p>Receive summaries, insights & tasks instantly.</p>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <h2>Pricing</h2>
+  <div class="flex">
+    <div class="card">
+      <h3>Basic</h3>
+      <p>Free Plan</p>
+    </div>
+    <div class="card">
+      <h3>Pro</h3>
+      <p>₹499/month</p>
+    </div>
+    <div class="card">
+      <h3>Enterprise</h3>
+      <p>Custom Pricing</p>
+    </div>
+  </div>
+</section>
+
+<!-- SIGN IN MODAL -->
+<div class="modal" id="signInModal">
+  <div class="modal-content">
+    <div class="close" onclick="closeModal()">X</div>
+    <h3>Sign In</h3>
+    <input type="email" id="email" placeholder="Enter Email">
+    <input type="password" id="password" placeholder="Enter Password">
+    <button onclick="signIn()">Login</button>
+  </div>
+</div>
+
+<script>
+
+function toggleMode(){
+  document.body.classList.toggle("dark");
+  const toggle = document.querySelector(".toggle");
+  toggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+}
+
+function openModal(){
+  document.getElementById("signInModal").style.display="flex";
+}
+
+function closeModal(){
+  document.getElementById("signInModal").style.display="none";
+}
+
+function signIn(){
+  const email=document.getElementById("email").value;
+  const password=document.getElementById("password").value;
+
+  if(email && password){
+    alert("Login Successful!");
+    closeModal();
+  } else{
+    alert("Please fill all fields.");
+  }
+}
+
+</script>
+
+</body>
+</html>

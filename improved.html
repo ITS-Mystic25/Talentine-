@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meeting Minds</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:white;
+  scroll-behavior:smooth;
+}
+
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 60px;
+  background:#0b1320;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:22px;
+  font-weight:700;
+}
+
+nav ul{
+  display:flex;
+  gap:30px;
+  list-style:none;
+}
+
+nav ul li{
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s;
+}
+
+nav ul li:hover{
+  color:#00c6ff;
+}
+
+.sign-btn{
+  padding:8px 18px;
+  background:#00c6ff;
+  border:none;
+  border-radius:20px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.sign-btn:hover{
+  background:#0072ff;
+}
+
+/* SECTION COMMON */
+section{
+  padding:80px 10%;
+  text-align:center;
+}
+
+h2{
+  font-size:36px;
+  margin-bottom:40px;
+  font-weight:700;
+}
+
+/* FLEXBOX GRID */
+.flex-container{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  flex-wrap:wrap;
+}
+
+.card{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  padding:30px;
+  border-radius:20px;
+  width:280px;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-10px);
+  background:rgba(255,255,255,0.15);
+}
+
+.card h3{
+  margin-bottom:15px;
+  font-size:22px;
+  font-weight:700;
+}
+
+.card p{
+  font-size:14px;
+  opacity:0.9;
+}
+
+/* PRICING HIGHLIGHT */
+.highlight{
+  border:2px solid #00c6ff;
+  transform:scale(1.05);
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content{
+  background:#1b2a41;
+  padding:40px;
+  border-radius:20px;
+  width:300px;
+  text-align:center;
+}
+
+.modal-content input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border:none;
+  border-radius:8px;
+}
+
+.modal-content button{
+  width:100%;
+  padding:10px;
+  background:#00c6ff;
+  border:none;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.close{
+  position:absolute;
+  top:20px;
+  right:40px;
+  font-size:28px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <!-- Your SVG Logo -->
+    <svg class="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="28">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+    </svg>
+    Meeting Minds
+  </div>
+
+  <nav>
+    <ul>
+      <li>Features</li>
+      <li>How It Works</li>
+      <li>Pricing</li>
+    </ul>
+  </nav>
+
+  <button class="sign-btn" onclick="openModal()">Sign In</button>
+</header>
+
+<!-- FEATURES -->
+<section>
+  <h2>🔥 Powerful Features</h2>
+  <div class="flex-container">
+    <div class="card">
+      <h3>Instant Summaries</h3>
+      <p>AI converts meetings into smart actionable summaries instantly.</p>
+    </div>
+    <div class="card">
+      <h3>Task Detection</h3>
+      <p>Automatically extracts tasks and assigns responsibilities.</p>
+    </div>
+    <div class="card">
+      <h3>Cloud Sync</h3>
+      <p>Access meeting insights anytime across all devices.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+  <h2>⚙ How It Works</h2>
+  <div class="flex-container">
+    <div class="card">
+      <h3>Record</h3>
+      <p>Upload or record your meeting audio.</p>
+    </div>
+    <div class="card">
+      <h3>AI Processing</h3>
+      <p>Our AI analyzes and structures conversations.</p>
+    </div>
+    <div class="card">
+      <h3>Get Insights</h3>
+      <p>Receive summaries, highlights & tasks instantly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section>
+  <h2>💎 Pricing</h2>
+  <div class="flex-container">
+    <div class="card">
+      <h3>Basic</h3>
+      <p>Free</p>
+      <p>Limited summaries per month.</p>
+    </div>
+    <div class="card highlight">
+      <h3>Pro</h3>
+      <p>₹499/month</p>
+      <p>Unlimited summaries + task automation.</p>
+    </div>
+    <div class="card">
+      <h3>Enterprise</h3>
+      <p>Custom Pricing</p>
+      <p>Advanced AI + Team collaboration tools.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SIGN IN MODAL -->
+<div class="modal" id="modal">
+  <span class="close" onclick="closeModal()">&times;</span>
+  <div class="modal-content">
+    <h2>Sign In</h2>
+    <input type="email" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <button>Login</button>
+  </div>
+</div>
+
+<script>
+function openModal(){
+  document.getElementById("modal").style.display="flex";
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
+
+window.onclick=function(e){
+  let modal=document.getElementById("modal");
+  if(e.target==modal){
+    modal.style.display="none";
+  }
+}
+</script>
+
+</body>
+</html>

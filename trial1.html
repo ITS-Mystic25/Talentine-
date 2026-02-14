@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MeetingMind</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================= GLOBAL ================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Poppins', sans-serif;
+    background:#f4f7ff;
+    color:#1e2a4a;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+section{
+    padding:110px 0;
+}
+
+h2{
+    font-family:'Montserrat', sans-serif;
+    font-size:40px;
+    font-weight:800;
+    margin-bottom:20px;
+}
+
+p{
+    color:#6b7280;
+    line-height:1.6;
+}
+
+/* ================= HEADER ================= */
+header{
+    position:fixed;
+    width:100%;
+    top:0;
+    background:linear-gradient(to right,#1e3a8a,#2563eb);
+    padding:18px 0;
+    z-index:1000;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:white;
+    font-family:'Montserrat', sans-serif;
+    font-weight:700;
+    font-size:22px;
+}
+
+.nav-links a{
+    margin:0 15px;
+    color:white;
+    text-decoration:none;
+    font-weight:500;
+    position:relative;
+}
+
+.nav-links a::after{
+    content:'';
+    width:0%;
+    height:2px;
+    background:white;
+    position:absolute;
+    bottom:-5px;
+    left:0;
+    transition:0.3s;
+}
+
+.nav-links a:hover::after{
+    width:100%;
+}
+
+.nav-buttons a{
+    margin-left:15px;
+    padding:8px 18px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:500;
+}
+
+.signin{
+    background:white;
+    color:#2563eb;
+    cursor:pointer;
+}
+
+.getstarted{
+    background:#0f172a;
+    color:white;
+}
+
+.getstarted:hover{
+    background:#000;
+}
+
+/* ================= HERO ================= */
+#home{
+    padding-top:160px;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:48px;
+    font-family:'Montserrat', sans-serif;
+    font-weight:800;
+}
+
+.hero span{
+    color:#2563eb;
+}
+
+.hero p{
+    max-width:600px;
+    margin:20px auto;
+}
+
+.hero-buttons a{
+    padding:14px 28px;
+    margin:10px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.btn-primary{
+    background:#2563eb;
+    color:white;
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px);
+    background:#1e40af;
+}
+
+.btn-outline{
+    border:2px solid #2563eb;
+    color:#2563eb;
+}
+
+.btn-outline:hover{
+    background:#2563eb;
+    color:white;
+}
+
+/* ================= FEATURES ================= */
+#features{
+    background:white;
+    text-align:center;
+}
+
+.features-flex{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:30px;
+    margin-top:60px;
+}
+
+.feature-card{
+    flex:1 1 250px;
+    max-width:270px;
+    padding:30px;
+    border-radius:18px;
+    background:#eef2ff;
+    transition:0.4s;
+    cursor:pointer;
+}
+
+.feature-card:hover{
+    background:#2563eb;
+    color:white;
+    transform:translateY(-10px) scale(1.05);
+    box-shadow:0 15px 30px rgba(37,99,235,0.3);
+}
+
+.feature-card h3{
+    font-family:'Montserrat';
+    margin-bottom:10px;
+    font-weight:700;
+}
+
+/* ================= HOW IT WORKS ================= */
+#how{
+    background:#f9fbff;
+    text-align:center;
+}
+
+.steps{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:30px;
+    margin-top:60px;
+}
+
+.step{
+    flex:1 1 250px;
+    max-width:300px;
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    transition:0.4s;
+    cursor:pointer;
+}
+
+.step:hover{
+    background:#2563eb;
+    color:white;
+    transform:translateY(-10px);
+}
+
+.step-number{
+    font-size:28px;
+    font-weight:800;
+    font-family:'Montserrat';
+    color:#2563eb;
+    margin-bottom:10px;
+}
+
+.step:hover .step-number{
+    color:white;
+}
+
+/* ================= PRICING ================= */
+#pricing{
+    background:white;
+    text-align:center;
+}
+
+.pricing-flex{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:30px;
+    margin-top:60px;
+}
+
+.price-card{
+    flex:1 1 280px;
+    max-width:300px;
+    padding:35px;
+    border-radius:20px;
+    background:#f1f5ff;
+    transition:0.4s;
+    cursor:pointer;
+}
+
+.price-card:hover{
+    transform:scale(1.07);
+    background:#2563eb;
+    color:white;
+    box-shadow:0 20px 40px rgba(37,99,235,0.3);
+}
+
+.price{
+    font-size:34px;
+    font-weight:800;
+    font-family:'Montserrat';
+    margin:15px 0;
+    color:#2563eb;
+}
+
+.price-card:hover .price{
+    color:white;
+}
+
+.price-card ul{
+    list-style:none;
+    margin:20px 0;
+}
+
+.price-card ul li{
+    margin:10px 0;
+}
+
+.price-card button{
+    padding:10px 25px;
+    border:none;
+    border-radius:8px;
+    background:#1e3a8a;
+    color:white;
+    cursor:pointer;
+}
+
+.price-card:hover button{
+    background:white;
+    color:#2563eb;
+}
+
+/* ================= MODAL ================= */
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content{
+    background:white;
+    padding:40px;
+    border-radius:15px;
+    width:320px;
+    text-align:center;
+}
+
+.modal-content input{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+.modal-content button{
+    width:100%;
+    padding:10px;
+    background:#2563eb;
+    border:none;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.close{
+    float:right;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* ================= FOOTER ================= */
+footer{
+    background:#1e3a8a;
+    color:white;
+    text-align:center;
+    padding:30px 0;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+<div class="container navbar">
+    <div class="logo">MeetingMind</div>
+
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#features">Features</a>
+        <a href="#how">How It Works</a>
+        <a href="#pricing">Pricing</a>
+    </div>
+
+    <div class="nav-buttons">
+        <a class="signin" onclick="openModal()">Sign In</a>
+        <a href="#pricing" class="getstarted">Get Started</a>
+    </div>
+</div>
+</header>
+
+<!-- HERO -->
+<section id="home">
+<div class="container hero">
+    <h1>Never Miss a <span>Meeting Detail</span> Again</h1>
+    <p>AI captures key points while you focus on conversation.</p>
+    <div class="hero-buttons">
+        <a href="#pricing" class="btn-primary">Start Free Trial</a>
+        <a href="#how" class="btn-outline">Watch Demo</a>
+    </div>
+</div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+<div class="container">
+<h2>Powerful Features</h2>
+
+<div class="features-flex">
+    <div class="feature-card"><h3>Live Transcription</h3><p>Real-time speech-to-text.</p></div>
+    <div class="feature-card"><h3>AI Summaries</h3><p>Instant key decision extraction.</p></div>
+    <div class="feature-card"><h3>Task Tracking</h3><p>Automatic action items.</p></div>
+    <div class="feature-card"><h3>Analytics</h3><p>Visual productivity insights.</p></div>
+</div>
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+<div class="container">
+<h2>How It Works</h2>
+
+<div class="steps">
+    <div class="step">
+        <div class="step-number">01</div>
+        <h3>Connect Meeting</h3>
+        <p>Upload or join video call.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">02</div>
+        <h3>AI Processes</h3>
+        <p>Transcribes and analyzes.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">03</div>
+        <h3>Get Summary</h3>
+        <p>Receive structured insights.</p>
+    </div>
+</div>
+</div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+<div class="container">
+<h2>Choose Your Plan</h2>
+
+<div class="pricing-flex">
+    <div class="price-card">
+        <h3>Free</h3>
+        <div class="price">$0</div>
+        <ul><li>5 Meetings</li><li>Basic Summary</li></ul>
+        <button>Get Started</button>
+    </div>
+
+    <div class="price-card">
+        <h3>Pro</h3>
+        <div class="price">$19</div>
+        <ul><li>Unlimited</li><li>Advanced AI</li></ul>
+        <button>Start Trial</button>
+    </div>
+
+    <div class="price-card">
+        <h3>Team</h3>
+        <div class="price">$49</div>
+        <ul><li>10 Members</li><li>Analytics</li></ul>
+        <button>Contact Sales</button>
+    </div>
+</div>
+</div>
+</section>
+
+<!-- SIGN IN MODAL -->
+<div class="modal" id="signinModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <h3>Sign In</h3>
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <button>Login</button>
+    </div>
+</div>
+
+<footer>
+<p>© 2026 MeetingMind. All rights reserved.</p>
+</footer>
+
+<script>
+
+function openModal(){
+    document.getElementById("signinModal").style.display="flex";
+}
+
+function closeModal(){
+    document.getElementById("signinModal").style.display="none";
+}
+
+window.onclick = function(e){
+    const modal = document.getElementById("signinModal");
+    if(e.target == modal){
+        modal.style.display="none";
+    }
+}
+
+</script>
+
+</body>
+</html>
